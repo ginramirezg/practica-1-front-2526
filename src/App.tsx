@@ -1,35 +1,59 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import "./App.css";
+import type { characterList } from "./types/types";
+import { api } from "./api/api";
 
-function App() {
-  const [count, setCount] = useState(0)
+import { LoaderComponent } from "./components/LoaderComponent";
+import { CharacterList } from "./components/CharacterList";
+import { ErrorComponent } from "./components/ErrorComponent";
+
+const App = () => {
+  const [characters, setCharacters] = useState<characterList>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const [nextPage, setNextPage] = useState<string | null>(null);
+
+  const fetchCharacters = async (url: string = "/people") => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await api.get(url);
+      setCharacters((prev) => [...prev, ...res.data.results]);
+      setNextPage(res.data.next); 
+    } catch (err) {
+      setError("Error al obtener los datos");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCharacters(); 
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div>
+      <h1 className="TitleClass">Star Wars Characters</h1>
 
-export default App
+      {loading && <LoaderComponent />}
+      {error && <ErrorComponent mensaje={error} />}
+
+      {!loading && !error && <CharacterList charList={characters} />}
+
+      {!loading && nextPage && (
+        <button
+          onClick={() => {
+            const cleanUrl = nextPage.replace("https://swapi.dev/api", "");
+            fetchCharacters(cleanUrl);
+          }}
+        >
+          Siguiente página
+        </button>
+      )}
+    </div>
+  );
+};
+
+export default App;
