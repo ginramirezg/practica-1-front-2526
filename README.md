@@ -66,7 +66,7 @@ Si se muestran versiones, la instalación se habrá realizado correctamente.
 Se deberá clonar el repositorio y acceder a la carpeta del proyecto:
 
 ```bash
-git clone URL_DEL_REPOSITORIO
+git clone <url del repositorio> 
 cd nombre-del-proyecto
 ```
 
