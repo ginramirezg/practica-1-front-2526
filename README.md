@@ -14,7 +14,50 @@ node -v
 npm -v
 ```
 
-En caso de no estar instalado, se recomendará utilizar NVM para instalar la versión LTS de Node.js.
+Si no estuviera instalado, se podrá instalar siguiendo los pasos indicados a continuación.
+
+---
+
+## Instalación de Node.js (mediante NVM)
+
+Se recomienda utilizar **NVM (Node Version Manager)** para instalar Node.js.
+
+### 1. Instalar NVM
+
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+```
+
+Después se deberá cargar NVM:
+
+```bash
+source ~/.bashrc
+```
+
+(Si se utiliza zsh:)
+
+```bash
+source ~/.zshrc
+```
+
+---
+
+### 2. Instalar la versión LTS de Node.js
+
+```bash
+nvm install --lts
+```
+
+---
+
+### 3. Verificar instalación
+
+```bash
+node -v
+npm -v
+```
+
+Si se muestran versiones, la instalación se habrá realizado correctamente.
 
 ---
 
@@ -75,7 +118,7 @@ npm run dev
 El proyecto se ejecutará normalmente en:
 
 ```
-http://localhost
+http://localhost:5173
 ```
 
 ---
@@ -86,11 +129,10 @@ http://localhost
 * Todas las dependencias se instalarán automáticamente mediante `npm install`.
 * El archivo `.env` deberá crearse manualmente, ya que no estará incluido en el repositorio por razones de seguridad.
 
-
-
-Perfecto. Aquí tienes el texto corregido, manteniendo la explicación pero sin incluir el contenido del archivo `types.ts`.
-
 ---
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
 
 # Breve explicación del desarrollo del proyecto
 
